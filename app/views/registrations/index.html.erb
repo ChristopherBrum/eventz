@@ -1,0 +1,14 @@
+<h1>Registrations for <%= link_to @event.name, @event %></h1>
+<ul class="registrations">
+	<% @registrations.each do |r| %>
+		<li>
+			<strong><%= r.name %></strong> is registered for: <%= r.event.name %>
+			<%= link_to "Delete", event_registration_path(@event, r.id), 
+				class: "button", 
+				data: {
+					turbo_method: :delete, turbo_confirm: "Are you sure?"
+				} 
+			%>
+		</li>
+	<% end %>
+</ul>

@@ -1,4 +1,38 @@
 <section class="user">
 	<h1><%= @user.name %></h1>
+	<h2><%= @user.username %></h2>
 	<h2><%= mail_to(@user.email) %></h2>
+		<div class="actions">
+			<% if current_user?(@user) %>
+				<%= link_to 'Edit Account', edit_user_path(@user), class: "button edit"  %>
+			<% end %>
+
+			<% if current_user_admin? %>
+				<%= link_to 'Delete Account', @user, 
+					data: { 
+						turbo_method: :delete, 
+						turbo_confirm: 'Are you sure?' 
+					}, 
+					class: 'button delete'  
+				%>
+			<% end %>
+		</div>
+		
+		<% if @registrations.present? %>
+			<h3>Registrations</h3>
+		<% end %>
+		
+		<% @registrations.each do |r| %>
+			<div class="registration">
+				<div class="image">
+					<%= link_to image_tag(r.event.image_file_name), r.event %>
+				</div>
+				<div class="name">
+					<%= link_to r.event.name, r.event %>
+				</div>
+				<div class="date">
+					<%= time_ago_in_words(r.created_at) %> ago
+				</div>
+			</div>
+		<% end %>
 </section>

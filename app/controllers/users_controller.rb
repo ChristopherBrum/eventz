@@ -11,6 +11,7 @@ class UsersController < ApplicationController # rubocop:disable Style/Documentat
   def show
     @user = User.find(params[:id])
     @registrations = @user.registrations
+    @liked_events = @user.liked_events
   end
 
   def new

@@ -1,0 +1,12 @@
+<li>
+	<%= nav_link_to "Upcoming", events_path %>
+</li>
+<li>
+	<%= nav_link_to "Past", filtered_events_path(:past) %>
+</li>
+<li>
+	<%= nav_link_to "Free", filtered_events_path(:free) %>
+</li>
+<li>
+	<%= nav_link_to "Recent", filtered_events_path(:recent) %>
+</li>

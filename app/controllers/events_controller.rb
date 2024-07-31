@@ -5,8 +5,16 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
   before_action :require_admin, except: [:index, :show]
 
   def index
-    @events = Event.all
-    # @events = Event.upcomimg
+    case params[:filter]
+    when 'past'
+      @events = Event.past
+    when 'free'
+      @events = Event.free
+    when 'recent'
+      @events = Event.recent
+    else
+      @events = Event.upcomimg
+    end
   end
 
   def show

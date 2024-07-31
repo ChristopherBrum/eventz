@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :likes
   root 'events#index'
 
   resources :events do
+    resources :likes
     resources :registrations
   end
 
-  resource :session, only: [:new, :create, :destroy]
+  resource :session, only: %i[new create destroy]
   get 'signin', to: 'sessions#new'
 
   resources :users

@@ -12,4 +12,12 @@ module EventsHelper # rubocop:disable Style/Documentation
   def day_and_time(event)
     event.starts_at.strftime('%B %d at %I:%M %P')
   end
+
+  def nav_link_to(text, url)
+    if current_page?(url)
+      link_to(text, url, class: 'active')
+    else
+      link_to(text, url)
+    end
+  end
 end

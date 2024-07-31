@@ -12,6 +12,7 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
   def show
     @event = Event.find(params[:id])
     @likers = @event.likers
+    @categories = @event.categories
     if current_user
       @like = current_user.likes.find_by(event_id: @event.id)
     end

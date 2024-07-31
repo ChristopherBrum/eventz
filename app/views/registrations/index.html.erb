@@ -2,9 +2,10 @@
 <ul class="registrations">
 	<% @registrations.each do |r| %>
 		<li>
-			<strong><%= r.name %></strong> is registered for: <%= r.event.name %>
+			<%= link_to r.user.name, r.user %> &bull; found event through: 
+			<%= r.how_heard %>
 			<%= link_to "Delete", event_registration_path(@event, r.id), 
-				class: "button", 
+				class: "button destroy", 
 				data: {
 					turbo_method: :delete, turbo_confirm: "Are you sure?"
 				} 

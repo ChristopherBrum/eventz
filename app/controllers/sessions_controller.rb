@@ -3,7 +3,7 @@
 class SessionsController < ApplicationController # rubocop:disable Style/Documentation
   def new; end
 
-  def create # rubocop:disable Metrics/AbcSize
+  def create # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
     user = User.find_by(email: params[:username_or_email]) ||
            User.find_by(username: params[:username_or_email])
 

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController # rubocop:disable Style/Documentation
+  before_action :require_signin, except: [:index, :show]
+  before_action :require_admin, except: [:index, :show]
+
   def index
     @events = Event.all
     # @events = Event.upcomimg

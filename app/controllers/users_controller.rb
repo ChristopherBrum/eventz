@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :require_signin, except: [:new, :create, :destroy]
-  before_action :require_correct_user, only: [:edit, :update]
+  # before_action :set_user, only: [:show, :update, :destroy]
+  before_action :require_signin, except: %i[new create destroy]
+  before_action :require_correct_user, only: %i[edit update]
 
   def index
     @users = User.all
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by!(slug: params[:id])
     @registrations = @user.registrations
     @liked_events = @user.liked_events
   end
@@ -52,7 +53,8 @@ class UsersController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def require_correct_user
-    @user = User.find(params[:id])
+    @user = User.find_by!(slug: params[:id])
+    p "current user: #{@user}"
     redirect_to events_url unless current_user?(@user)
   end
 end

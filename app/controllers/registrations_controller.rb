@@ -32,7 +32,7 @@ class RegistrationsController < ApplicationController # rubocop:disable Style/Do
   private
 
   def set_event
-    @event = Event.find(params[:event_id])
+    @event = Event.find_by!(slug: params[:event_id])
   end
 
   def registration_params

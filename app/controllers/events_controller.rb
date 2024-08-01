@@ -1,24 +1,24 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :require_signin, except: [:index, :show]
-  before_action :require_admin, except: [:index, :show]
+  before_action :require_signin, except: %i[index show]
+  before_action :require_admin, except: %i[index show]
+  before_action :set_event, only: %i[show edit update destroy]
 
   def index
-    case params[:filter]
-    when 'past'
-      @events = Event.past
-    when 'free'
-      @events = Event.free
-    when 'recent'
-      @events = Event.recent
-    else
-      @events = Event.upcomimg
-    end
+    @events = case params[:filter]
+              when 'past'
+                Event.past
+              when 'free'
+                Event.free
+              when 'recent'
+                Event.recent
+              else
+                Event.upcomimg
+              end
   end
 
   def show
-    @event = Event.find(params[:id])
     @likers = @event.likers
     @categories = @event.categories
     if current_user
@@ -26,12 +26,9 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
     end
   end
 
-  def edit
-    @event = Event.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @event = Event.find(params[:id])
     if @event.update(event_params)
       redirect_to @event, notice: 'Event successfully updated!'
     else
@@ -53,12 +50,15 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to events_url, status: :see_other, notice: 'Event successfully deleted!'
   end
 
   private
+
+  def set_event
+    @event = Event.find_by!(slug: params[:id])
+  end
 
   def event_params
     params

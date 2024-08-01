@@ -9,6 +9,8 @@ class Event < ApplicationRecord # rubocop:disable Style/Documentation
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
 
+  has_one_attached :main_image
+
   validates :name, presence: true, uniqueness: true
   validates :location, presence: true
 
@@ -17,10 +19,6 @@ class Event < ApplicationRecord # rubocop:disable Style/Documentation
   validates :capacity, numericality: {
     only_integer: true,
     greater_than: 0
-  }
-  validates :image_file_name, format: {
-    with: /\w+\.(jpg|png)\z/i,
-    message: 'must be a jpg or png image'
   }
 
   scope :past, -> { where('starts_at < ?', Time.now).order('starts_at') }

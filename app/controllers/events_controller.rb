@@ -32,7 +32,7 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
     if @event.update(event_params)
       redirect_to @event, notice: 'Event successfully updated!'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocepssable_entity
     end
   end
 
@@ -63,6 +63,6 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
   def event_params
     params
       .require(:event)
-      .permit(:name, :description, :location, :price, :starts_at, :capacity, :image_file_name, category_ids: [])
+      .permit(:name, :description, :location, :price, :starts_at, :capacity, :main_image, category_ids: [])
   end
 end

@@ -20,4 +20,12 @@ module EventsHelper # rubocop:disable Style/Documentation
       link_to(text, url)
     end
   end
+
+  def main_image(event)
+    if event.main_image.attached?
+      image_tag event.main_image
+    else
+      image_tag 'placeholder.png'
+    end
+  end
 end

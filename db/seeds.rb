@@ -18,8 +18,7 @@ Event.create!([
       reporting bugs, fixing bugs, or even creating
       a few bugs!
     }.squish,
-    capacity: 50,
-    image_file_name: 'bugsmash.png'
+    capacity: 50
   },
   {
     name: 'Hackathon',
@@ -32,8 +31,7 @@ Event.create!([
       on anything you want. The entry fee goes toward a bounty of cash
       and prizes for winners in a variety of categories.
     }.squish,
-    capacity: 160,
-    image_file_name: 'hackathon.png'
+    capacity: 160
   },
   {
     name: 'Kata Camp',
@@ -43,8 +41,7 @@ Event.create!([
     description: %{
       Kata Camp is where developers go to practice their craft without interruptions. Skip the status reports and stand-up meetings of a typical project. Just get 'er done! Price includes a buffet lunch and a leather-bound journal to record your kata achievements.
     }.squish,
-    capacity: 75,
-    image_file_name: 'katacamp.png'
+    capacity: 75
   },
   {
     name: "Coffee 'n Code",
@@ -54,8 +51,7 @@ Event.create!([
     description: %{
       Start your day off right with a good cup of Joe while you sling some code with other local developers. By the time you hit the office, you'll be in the groove!
     }.squish,
-    capacity: 20,
-    image_file_name: 'coffee-code.png'
+    capacity: 20
   },
   {
     name: 'Rails User Group',
@@ -65,8 +61,7 @@ Event.create!([
     description: %{
       Come enjoy a technical talk and meet local Rails developers! This week's topic is a comparison of editors, templating systems, and whether to use tabs or spaces.
     }.squish,
-    capacity: 200,
-    image_file_name: 'rails-user-group.png'
+    capacity: 200
   },
   {
     name: 'Ruby User Group',
@@ -77,8 +72,7 @@ Event.create!([
       Do you heart Ruby? So do we! Every week a local developer presents
       a new Ruby-related topic to help you keep on top of your game.
     }.squish,
-    capacity: 500,
-    image_file_name: 'ruby-user-group.png'
+    capacity: 500
   },
   {
     name: '5-Minute Lightning Talks',
@@ -88,8 +82,7 @@ Event.create!([
     description: %{
       Got a newfangled trick? A handy new tool? A just-released library? Here's your chance to share it! But you only get 5 minutes to present your must-know tip, so keep it snappy. Price includes an open ice cream and root beer float bar.
     }.squish,
-    capacity: 300,
-    image_file_name: 'lightning.png'
+    capacity: 300
   },
   {
     name: 'Drone Zone',
@@ -100,8 +93,7 @@ Event.create!([
       What happens when software and hardware geeks get together?
       Thing spin, whirl, and (possibly) collide! Everyone is welcome, whether you're new to hacking with drones and drone software, or have experience that reaches to the sky.
     }.squish,
-    capacity: 100,
-    image_file_name: 'drone-zone.png'
+    capacity: 100
   },
   {
     name: 'Coding Ninjas',
@@ -111,7 +103,46 @@ Event.create!([
     description: %{
       Why ninjas? We have no idea, but the icon is cool. Don't miss this opportunity to show off your ninja moves.
     }.squish,
-    capacity: 400,
-    image_file_name: 'ninjas.png'
+    capacity: 400
   }
 ])
+
+# User.create!([
+#   {
+#     name: 'Chris',
+#     username: 'olivegardenofgrief',
+#     email: 'chris@hi.com',
+#     admin: true,
+#     password: 'secret'
+#   },
+#   {
+#     name: 'Adrienne',
+#     username: 'sandwitch',
+#     email: 'adrienne@hi.com',
+#     admin: false,
+#     password: 'secret'
+#   },
+#   {
+#     name: 'Beemo',
+#     username: 'gordyboi',
+#     email: 'beemo@hi.com',
+#     admin: false,
+#     password: 'secret'
+#   },
+# ])
+
+[
+  ['BugSmash', 'bugsmash.png'],
+  ['Hackathon', 'hackathon.png'],
+  ['Kata Camp', 'katacamp.png'],
+  ['Coffee \'n Code', 'coffee-code.png'],
+  ['Rails User Group', 'rails-user-group.png'],
+  ['Ruby User Group', 'ruby-user-group.png'],
+  ['5-Minute Lightning Talks', 'lightning.png'],
+  ['Drone Zone', 'drone-zone.png'],
+  ['Coding Ninjas', 'ninjas.png']
+].each do |event_name, file_name|
+  e = Event.find_by!(name: event_name)
+  f = File.open(Rails.root.join("app/assets/images/#{file_name}"))
+  e.main_image.attach(io: f, filename: file_name)
+end

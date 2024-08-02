@@ -32,7 +32,7 @@ class EventsController < ApplicationController # rubocop:disable Style/Documenta
     if @event.update(event_params)
       redirect_to @event, notice: 'Event successfully updated!'
     else
-      render :edit, status: :unprocepssable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

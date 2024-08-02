@@ -20,6 +20,7 @@ class Event < ApplicationRecord # rubocop:disable Style/Documentation
     only_integer: true,
     greater_than: 0
   }
+  validate :acceptable_image
 
   scope :past, -> { where('starts_at < ?', Time.now).order('starts_at') }
   scope :upcomimg, -> { where('starts_at > ?', Time.now).order('starts_at') }
@@ -42,5 +43,18 @@ class Event < ApplicationRecord # rubocop:disable Style/Documentation
 
   def set_slug
     self.slug = name.parameterize
+  end
+
+  def acceptable_image
+    return unless main_image.attached?
+
+    unless main_image.blob.byte_size <= 1.megabyte
+      errors.add(:main_image, 'is too big')
+    end
+
+    acceptable_types = ['image/jpeg', 'image/png']
+    unless acceptable_types.include?(main_image.content_type)
+      errors.add(:main_image, 'must be a jpeg or png')
+    end
   end
 end
